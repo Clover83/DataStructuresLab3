@@ -99,6 +99,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OurNode.cpp" />
+    <ClCompile Include="OurTree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="OurNode.h" />
+    <ClInclude Include="OurTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
