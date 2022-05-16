@@ -26,27 +26,14 @@ OurNode::~OurNode() {
 }
 
 void OurNode::Insert(int v) {
-	size += node->size;
-	std::vector<OurNode*> insertionPath;
-	insertionPath.push_back(this);
-	if (node->value >= value) {
-		if (right != nullptr) {
-			std::vector<OurNode*> rv = right->InsertRaw(node);
-			insertionPath.insert(insertionPath.end(), rv.begin(), rv.end());
-			return insertionPath;
+	std::vector<OurNode*> path = InsertRaw(new OurNode(v));
+	for (int i = 0; i < path.size(); i++) {
+		OurNode* n = path[i];
+		if ((n->left != nullptr && n->left->size > cValue * n->size) ||
+			(n->right != nullptr && n->right->size > cValue * n->size)) {
+			n->Balance();
 		}
-		node->previous = this;
-		right = node;
-		return insertionPath;
 	}
-	if (left != nullptr) {
-		std::vector<OurNode*> lv = left->InsertRaw(node);
-		insertionPath.insert(insertionPath.end(), lv.begin(), lv.end());
-		return insertionPath;
-	}
-	node->previous = this;
-	left = node;
-	return insertionPath;
 }
 
 /// <summary>
@@ -181,4 +168,12 @@ std::string OurNode::PrintHelper(int space) {
 
 void OurNode::Print() {
 	std::cout << PrintHelper(0);
+}
+
+OurNode* OurNode::GetRoot() {
+	OurNode* root = this;
+	while (root->previous != nullptr) {
+		root = root->previous;
+	}
+	return root;
 }

@@ -1,10 +1,8 @@
 #include <iostream>
 #include "OurNode.h"
+#include "OurTree.h"
 
 int main() {
-
-    OurNode::cValue = 0.5;
-    OurNode* root = new OurNode(5);
 
     //root->left = new OurNode(3);
     //root->right = new OurNode(7);
@@ -15,18 +13,23 @@ int main() {
     //root->left->left->left = new OurNode(1);
     //root->left->left->left->left = new OurNode(0);
 
-    root->Insert(3);
-    root->Insert(7);
-    root->Insert(2);
-    root->Insert(1);
-    root->Insert(0);
-    root->Insert(4);
-    root->Insert(6);
-    root->Insert(8);
-    root->left->Balance();
-    root->Print();
+    OurNode::cValue = 0.9;
+    OurTree tree;
+    /*tree.Insert(5);
+    tree.Insert(3);
+    tree.Insert(7);
+    tree.Insert(2);
+    tree.Insert(1);
+    tree.Insert(0);
+    tree.Insert(4);
+    tree.Insert(6);
+    tree.Insert(8);*/
 
-    delete root;
+    for (int i = 0; i < 20; i++) {
+        tree.Insert(i);
+    }
+    //root->left->Balance();
+    tree.Print();
 
     // Prevent console from shutting
     int n;

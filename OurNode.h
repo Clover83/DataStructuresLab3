@@ -30,6 +30,7 @@ public:
 	std::vector<OurNode*> GetSorted();
 
 	int GetHeight();
+	OurNode* GetRoot();
 	void Print();
 };
 
