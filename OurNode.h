@@ -8,10 +8,12 @@ class OurNode
 {
 private:
 	// Does not check for balance
-	void InsertRaw(OurNode* node);
+	std::vector<OurNode*> InsertRaw(OurNode* node);
 	std::string PrintHelper(int space);
 
 public:
+	static float cValue;
+
 	OurNode* previous;
 	OurNode* right;
 	OurNode* left;

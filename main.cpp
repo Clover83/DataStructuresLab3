@@ -3,6 +3,7 @@
 
 int main() {
 
+    OurNode::cValue = 0.5;
     OurNode* root = new OurNode(5);
 
     //root->left = new OurNode(3);
@@ -22,6 +23,7 @@ int main() {
     root->Insert(4);
     root->Insert(6);
     root->Insert(8);
+    root->left->Balance();
     root->Print();
 
     delete root;

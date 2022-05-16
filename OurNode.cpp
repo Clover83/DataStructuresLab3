@@ -1,5 +1,7 @@
 #include "OurNode.h"
 
+float OurNode::cValue = 0.5;
+
 OurNode::OurNode() : OurNode(0) {}
 
 OurNode::OurNode(int v) {
@@ -24,66 +26,96 @@ OurNode::~OurNode() {
 }
 
 void OurNode::Insert(int v) {
-	if (v >= value) {
-		if (right != nullptr) {
-			right->Insert(v);
-		}
-		else {
-			right = new OurNode(v);
-		}
-	}
-	else {
-		if (left != nullptr) {
-			left->Insert(v);
-		}
-		else {
-			left = new OurNode(v);
-		}
-	}
-	size++;
-	// check if balanced
-}
-
-void OurNode::InsertRaw(OurNode* node) {
 	size += node->size;
+	std::vector<OurNode*> insertionPath;
+	insertionPath.push_back(this);
 	if (node->value >= value) {
 		if (right != nullptr) {
-			right->InsertRaw(node);
-			return;
+			std::vector<OurNode*> rv = right->InsertRaw(node);
+			insertionPath.insert(insertionPath.end(), rv.begin(), rv.end());
+			return insertionPath;
 		}
+		node->previous = this;
 		right = node;
-		return;
+		return insertionPath;
 	}
 	if (left != nullptr) {
-		left->InsertRaw(node);
-		return;
+		std::vector<OurNode*> lv = left->InsertRaw(node);
+		insertionPath.insert(insertionPath.end(), lv.begin(), lv.end());
+		return insertionPath;
 	}
+	node->previous = this;
 	left = node;
+	return insertionPath;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="node"></param>
+/// <returns>Insertion path</returns>
+std::vector<OurNode*> OurNode::InsertRaw(OurNode* node) {
+	size += node->size;
+	std::vector<OurNode*> insertionPath;
+	insertionPath.push_back(this);
+	if (node->value >= value) {
+		if (right != nullptr) {
+			std::vector<OurNode*> rv = right->InsertRaw(node);
+			insertionPath.insert(insertionPath.end(), rv.begin(), rv.end());
+			return insertionPath;
+		}
+		node->previous = this;
+		right = node;
+		return insertionPath;
+	}
+	if (left != nullptr) {
+		std::vector<OurNode*> lv = left->InsertRaw(node);
+		insertionPath.insert(insertionPath.end(), lv.begin(), lv.end());
+		return insertionPath;
+	}
+	node->previous = this;
+	left = node;
+	return insertionPath;
 }
 
 void OurNode::Balance() {
+	int sizeCache = size;
 	OurNode* parent = previous;
 	std::vector<OurNode*> sorted = GetSorted();
-	int sizeCache = sorted.size();
 	for (int i = 0; i < sizeCache; i++) {
 		OurNode* n = sorted[i];
 		n->size = 1;
-		n->right = nullptr;
-		n->left = nullptr;
 		n->previous = nullptr;
+		n->left = nullptr;
+		n->right = nullptr;
 	}
-	int iHalf = sizeCache / 2;
-	OurNode* middle = sorted[iHalf];
+
+	int iMid = sizeCache / 2;
+	OurNode* newRoot = sorted[iMid];
+	int iLeft = iMid - 1;
+	int iRight = iMid + 1;
 	
-	int iLeft = iHalf - 1;
-	int iRight = iHalf + 1;
-	while (iRight < sizeCache || iLeft >= 0) {
-		middle->InsertRaw(sorted[iLeft]);
-		middle->InsertRaw(sorted[iRight]);
+	while (iLeft >= 0 || iRight < sizeCache) {
+		if (iLeft >= 0) {
+			newRoot->InsertRaw(sorted[iLeft]);
+		}
+		if (iRight < sizeCache) {
+			newRoot->InsertRaw(sorted[iRight]);
+		}
 		iLeft--;
 		iRight++;
 	}
-	parent->InsertRaw(middle);
+
+	if (parent != nullptr) {
+		if (newRoot->value >= parent->value) {
+			parent->right = newRoot;
+			newRoot->previous = parent;
+		}
+		else {
+			parent->left = newRoot;
+			newRoot->previous = parent;
+		}
+	}
 }
 
 
@@ -102,6 +134,7 @@ std::vector<OurNode*> OurNode::GetSorted() {
 	}
 	// Add root
 	sorted.push_back(this);
+
 	// Add right half
 	if (right != nullptr) {
 		std::vector<OurNode*> rightSorted = right->GetSorted();
