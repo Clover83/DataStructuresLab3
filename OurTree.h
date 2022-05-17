@@ -12,5 +12,6 @@ public:
 	void Insert(int v);
 	void Balance();
 	void Print();
+	void PrintSize();
 };
 

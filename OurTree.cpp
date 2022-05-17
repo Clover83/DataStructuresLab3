@@ -20,7 +20,11 @@ void OurTree::Insert(int v) {
 }
 
 void OurTree::Print() {
-	root->Print();
+	root->Print(false);
+}
+
+void OurTree::PrintSize() {
+	root->Print(true);
 }
 
 void OurTree::Balance() {

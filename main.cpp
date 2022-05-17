@@ -25,10 +25,16 @@ int main() {
     tree.Insert(6);
     tree.Insert(8);*/
 
-    for (int i = 0; i < 20; i++) {
+    srand(time(0));
+    for (int i = 0; i < 10; i++) {
+        //tree.Insert(rand() % 30);
         tree.Insert(i);
     }
     //root->left->Balance();
+    //tree.Balance();
+    tree.Print();
+    std::cout << "----------------\n";
+    tree.Balance();
     tree.Print();
 
     // Prevent console from shutting

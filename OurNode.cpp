@@ -27,13 +27,22 @@ OurNode::~OurNode() {
 
 void OurNode::Insert(int v) {
 	std::vector<OurNode*> path = InsertRaw(new OurNode(v));
-	for (int i = 0; i < path.size(); i++) {
+
+	// int i = 0; i < path.size(); i++
+	// int i = path.size()-1; i >= 0; i--
+	for (int i = path.size() - 1; i >= 0; i--) {
+		std::cout << (path[i] == GetRoot()) << " ";
 		OurNode* n = path[i];
-		if ((n->left != nullptr && n->left->size > cValue * n->size) ||
-			(n->right != nullptr && n->right->size > cValue * n->size)) {
-			n->Balance();
+		int leftSize = n->left == nullptr ? 0 : n->left->size;
+		int rightSize = n->right == nullptr ? 0 : n->right->size;
+		int nodeSize = n->size;
+		
+		if ((leftSize < nodeSize / 2 || leftSize > cValue * nodeSize) ||
+			(rightSize < nodeSize / 2 || rightSize > cValue * nodeSize)) {
+			//n->Balance();
 		}
 	}
+	std::cout << std::endl;
 }
 
 /// <summary>
@@ -146,28 +155,34 @@ int OurNode::GetHeight() {
 	return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
 }
 
-std::string OurNode::PrintHelper(int space) {
+std::string OurNode::PrintHelper(int space, bool printSize) {
 	std::string str;
 	const int SPACING = 4;
 	space += SPACING;
 	if (right != nullptr) {
-		str.append(right->PrintHelper(space));
+		str.append(right->PrintHelper(space, printSize));
 	}
 	str.append("\n");
 	for (int i = SPACING; i < space; i++) {
 		str.append(" ");
 	}
-	str.append(std::to_string(value) + "\n");
+	if (printSize) {
+		str.append(std::to_string(size) + "\n");
+	}
+	else {
+		str.append(std::to_string(value) + "\n");
+	}
+	
 
 	if (left != nullptr) {
-		str.append(left->PrintHelper(space));
+		str.append(left->PrintHelper(space, printSize));
 	}
 
 	return str;
 }
 
-void OurNode::Print() {
-	std::cout << PrintHelper(0);
+void OurNode::Print(bool printSize) {
+	std::cout << PrintHelper(0, printSize);
 }
 
 OurNode* OurNode::GetRoot() {
