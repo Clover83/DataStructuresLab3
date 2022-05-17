@@ -98,13 +98,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataHandler.cpp" />
+    <ClCompile Include="DynamicDataHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OurNode.cpp" />
     <ClCompile Include="OurTree.cpp" />
+    <ClCompile Include="StandardNode.cpp" />
+    <ClCompile Include="StandardTree.cpp" />
+    <ClCompile Include="Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataHandler.h" />
+    <ClInclude Include="DynamicDataHandler.h" />
     <ClInclude Include="OurNode.h" />
     <ClInclude Include="OurTree.h" />
+    <ClInclude Include="StandardNode.h" />
+    <ClInclude Include="StandardTree.h" />
+    <ClInclude Include="Tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

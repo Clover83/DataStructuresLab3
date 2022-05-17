@@ -1,6 +1,6 @@
 #include "OurNode.h"
 
-float OurNode::cValue = 0.5;
+float OurNode::cValue = 0.51;
 
 OurNode::OurNode() : OurNode(0) {}
 

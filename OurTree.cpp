@@ -31,3 +31,31 @@ void OurTree::Balance() {
 	root->Balance();
 	root = root->GetRoot();
 }
+
+// Static methods, generators etc
+OurTree* OurTree::TreeFromRandom(int size) {
+	srand(time(0));
+	OurTree* tree = new OurTree();
+	for (int i = 0; i < size; i++) {
+		tree->Insert(rand() % size);
+	}
+	return tree;
+}
+
+OurTree* OurTree::TreeFromSorted(int size) {
+	srand(time(0));
+	OurTree* tree = new OurTree();
+	for (int i = 0; i < size; i++) {
+		tree->Insert(i);
+	}
+	return tree;
+}
+
+OurTree* OurTree::TreeFromArr(int* arr, int size) {
+	srand(time(0));
+	OurTree* tree = new OurTree();
+	for (int i = 0; i < size; i++) {
+		tree->Insert(arr[i]);
+	}
+	return tree;
+}

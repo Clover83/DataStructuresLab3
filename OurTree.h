@@ -2,7 +2,7 @@
 #include "OurNode.h"
 class OurTree
 {
-public:
+private:
 	OurNode* root;
 
 public:
@@ -13,5 +13,9 @@ public:
 	void Balance();
 	void Print();
 	void PrintSize();
+
+	static OurTree* TreeFromRandom(int size);
+	static OurTree* TreeFromSorted(int size);
+	static OurTree* TreeFromArr(int* arr, int size);
 };
 
