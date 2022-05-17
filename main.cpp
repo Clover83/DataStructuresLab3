@@ -34,8 +34,6 @@ int main() {
     //tree.Balance();
     tree.Print();
     std::cout << "----------------\n";
-    tree.Balance();
-    tree.Print();
 
     // Prevent console from shutting
     int n;

@@ -2,7 +2,7 @@
 #include "OurNode.h"
 class OurTree
 {
-private:
+public:
 	OurNode* root;
 
 public:

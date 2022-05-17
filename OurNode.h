@@ -11,6 +11,8 @@ private:
 	std::vector<OurNode*> InsertRaw(OurNode* node);
 	std::string PrintHelper(int space, bool printSize);
 
+	OurNode* BalanceHelper(std::vector<OurNode*>& nodes, int start, int end);
+
 public:
 	static float cValue;
 
@@ -26,7 +28,7 @@ public:
 
 	void Insert(int value);
 	
-	void Balance();
+	OurNode* Balance();
 	std::vector<OurNode*> GetSorted();
 
 	int GetHeight();

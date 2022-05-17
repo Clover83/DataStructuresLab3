@@ -31,7 +31,6 @@ void OurNode::Insert(int v) {
 	// int i = 0; i < path.size(); i++
 	// int i = path.size()-1; i >= 0; i--
 	for (int i = path.size() - 1; i >= 0; i--) {
-		std::cout << (path[i] == GetRoot()) << " ";
 		OurNode* n = path[i];
 		int leftSize = n->left == nullptr ? 0 : n->left->size;
 		int rightSize = n->right == nullptr ? 0 : n->right->size;
@@ -39,10 +38,9 @@ void OurNode::Insert(int v) {
 		
 		if ((leftSize < nodeSize / 2 || leftSize > cValue * nodeSize) ||
 			(rightSize < nodeSize / 2 || rightSize > cValue * nodeSize)) {
-			//n->Balance();
+			n->Balance();
 		}
 	}
-	std::cout << std::endl;
 }
 
 /// <summary>
@@ -74,44 +72,43 @@ std::vector<OurNode*> OurNode::InsertRaw(OurNode* node) {
 	return insertionPath;
 }
 
-void OurNode::Balance() {
-	int sizeCache = size;
-	OurNode* parent = previous;
+OurNode* OurNode::BalanceHelper(std::vector<OurNode*>& nodes, int start, int end) {
+	if (start > end) {
+		return nullptr;
+	}
+
+	int iMid = (start + end) / 2;
+	OurNode* newRoot = nodes[iMid];
+	newRoot->size = 1;
+	newRoot->left = BalanceHelper(nodes, start, iMid - 1);
+	if (newRoot->left != nullptr) {
+		newRoot->left->previous = newRoot;
+		newRoot->size += newRoot->left->size;
+	}
+	newRoot->right = BalanceHelper(nodes, iMid + 1, end);
+	if (newRoot->right != nullptr) {
+		newRoot->right->previous = newRoot;
+		newRoot->size += newRoot->right->size;
+	}
+
+	return newRoot;
+}
+
+OurNode* OurNode::Balance() {
 	std::vector<OurNode*> sorted = GetSorted();
-	for (int i = 0; i < sizeCache; i++) {
-		OurNode* n = sorted[i];
-		n->size = 1;
-		n->previous = nullptr;
-		n->left = nullptr;
-		n->right = nullptr;
-	}
-
-	int iMid = sizeCache / 2;
-	OurNode* newRoot = sorted[iMid];
-	int iLeft = iMid - 1;
-	int iRight = iMid + 1;
+	OurNode* parent = previous;
 	
-	while (iLeft >= 0 || iRight < sizeCache) {
-		if (iLeft >= 0) {
-			newRoot->InsertRaw(sorted[iLeft]);
-		}
-		if (iRight < sizeCache) {
-			newRoot->InsertRaw(sorted[iRight]);
-		}
-		iLeft--;
-		iRight++;
-	}
-
+	OurNode* newRoot = BalanceHelper(sorted, 0, size - 1);
+	newRoot->previous = parent;
 	if (parent != nullptr) {
 		if (newRoot->value >= parent->value) {
 			parent->right = newRoot;
-			newRoot->previous = parent;
 		}
 		else {
 			parent->left = newRoot;
-			newRoot->previous = parent;
 		}
 	}
+	return newRoot;
 }
 
 
