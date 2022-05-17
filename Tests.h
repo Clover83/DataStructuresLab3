@@ -11,7 +11,7 @@ public:
 	/// Non-culmulative insertion time comparison for single insertions, sorted numbers
 	/// </summary>
 	/// <param name="n"></param>
-	static void Test1(int size, int resolution, int repeats);
+	static void Test1(int size, int repeats);
 
 	/// <summary>
 	/// Non-culmulative insertion time comparison for single insertions, random numbers
@@ -19,7 +19,7 @@ public:
 	/// <param name="initialSize"></param>
 	/// <param name="numberOfInsertions"></param>
 	/// <param name="repeats"></param>
-	static void Test2(int size, int resolution, int repeats);
+	static void Test2(int size, int repeats);
 
 	/// <summary>
 	/// TOTAL insertion time for a series of insertions, sorted numbers

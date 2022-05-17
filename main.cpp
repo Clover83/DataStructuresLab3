@@ -4,8 +4,8 @@
 int main() {
 
     OurNode::cValue = 0.51;
-    Tests::Test3(1000, 10, 10);
-
+    Tests::Test2(1500, 10);
+    
     
     // Prevent console from shutting
     int n;

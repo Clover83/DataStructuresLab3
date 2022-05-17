@@ -19,7 +19,10 @@ void DynamicDataHandler::Write() {
     fh.open(filename, std::ofstream::trunc);
     for (int r = 0; r < maxRow; r++) {
         for (int c = 0; c < columns.size(); c++) {
-            fh << std::to_string(columns[c][r]) << ",";
+            fh << std::to_string(columns[c][r]);
+            if (c != columns.size() - 1) {
+                fh << ",";
+            }
         }
         fh << "\n";
     }
