@@ -3,9 +3,10 @@
 
 int main() {
 
-    OurNode::cValue = 0.90;
-    Tests::Test1(10000, 1000, 10);
+    OurNode::cValue = 0.51;
+    Tests::Test3(1000, 10, 10);
 
+    
     // Prevent console from shutting
     int n;
     std::cin >> n;
