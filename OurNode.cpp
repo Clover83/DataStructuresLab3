@@ -28,8 +28,6 @@ OurNode::~OurNode() {
 void OurNode::Insert(int v) {
 	std::vector<OurNode*> path = InsertRaw(new OurNode(v));
 
-	// int i = 0; i < path.size(); i++
-	// int i = path.size()-1; i >= 0; i--
 	for (int i = path.size() - 1; i >= 0; i--) {
 		OurNode* n = path[i];
 		int leftSize = n->left == nullptr ? 0 : n->left->size;
