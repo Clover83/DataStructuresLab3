@@ -55,11 +55,11 @@ void Tests::Test2(int size, int repeats) {
 			int completeness = 100 * i / size;
 			std::cout << completeness << "%" << std::endl;
 			
-			int randval = rand() % size;
+			int randval = rand();
 			auto start = high_resolution_clock::now();
 			oT.Insert(randval);
 			auto middle = high_resolution_clock::now();
-			//sT.Insert(randval);
+			sT.Insert(randval);
 			auto stop = high_resolution_clock::now();
 
 			auto ourDuration = duration_cast<microseconds>(middle - start);
@@ -128,14 +128,16 @@ void Tests::Test4(int size, int resolution, int repeats) {
 	DynamicDataHandler stdDH(stdName);
 
 	for (int r = 0; r < repeats; r++) {
+		std::cout << "Running iteration " << r << "/" << repeats << std::endl;
 		for (int step = increment; step <= size; step += increment) {
+			std::cout << 100 * step / size << "%" << std::endl;
 			OurTree oT;
 			StandardTree sT;
 
 			// generate random numbers before measuring
 			std::vector<int> randvals;
 			for (int i = 0; i < step; i++) {
-				randvals.push_back(rand() % size);
+				randvals.push_back(rand());
 			}
 
 			auto oStart = high_resolution_clock::now();
